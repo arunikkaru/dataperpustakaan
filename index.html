@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  	<title>Data Pengunjung Perpustakaan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+
+	</head>
+	<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section">Data Pengunjung Perpustakaan</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-bordered table-dark table-hover">
+							<input type="text" id="search" placeholder="search">
+								<thead>
+									<tr>
+										<th>No</th>
+										<th>Nama</th>
+										<th>Email</th>
+										<th>Detail</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						
+							<div id="detail"></div>
+						
+							<script>
+								const tbody = document.querySelector('tbody')
+								const detail = document.getElementById('detail')
+								const searchForm = document.getElementById('search')
+								let usersData = [];
+								const loadData = async () => {
+									try {
+										const url = await fetch('https://jsonplaceholder.typicode.com/users');
+										usersData = await url.json();
+										console.log(usersData)
+										loadUserData(usersData);
+									} 
+									catch (err) {
+										console.log(err)
+									}
+								}
+								const loadUserData = (data) => {
+									let no = 1;
+									const output = data.map((el) => {
+										return `
+										<tr>
+											<td>` + (no++) + `</td>
+											<td>${el.name}</td>
+											<td>${el.email}</td>
+											<td><button onclick='showDetail(${el.id})'>Detail</button></td>
+											</tr>
+											`
+										}).join('')
+									tbody.innerHTML = output;
+								}
+								function showDetail(id) {
+									fetch('https://jsonplaceholder.typicode.com/users/' + id)
+									.then((res) => res.json())
+									.then((data) => {
+										detail.innerHTML = ''
+										detail.insertAdjacentHTML('beforeend', `
+										<ul>
+											<li>${data.name}</li>
+											<li>${data.username}</li>
+											<li>${data.email}</li>
+											<li>${data.address.city}</li>
+											<li>${data.phone}</li>
+										</ul>
+									`)
+								})
+							}
+
+							searchForm.addEventListener('keyup', (e) => {
+								const value = e.target.value.toLowerCase();
+								const input = usersData.filter((data) => {
+									return (
+										data.name.toLowerCase().includes(value)
+									)
+								})
+								loadUserData(input)
+							})
+						
+							loadData()
+						</script>	
+	<script src="js/jquery.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+	</body>
+</html>
+

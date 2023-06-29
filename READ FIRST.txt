@@ -1,0 +1,16 @@
+"Project Menampilkan dan Mengambil Data dari API ke browser"
+
+Desc : 
+1. Project ini menggunakan data yang diambil dari JSON Placeholder
+2. Data yang digunakan dapat dilihat pada user.js
+3. script.js hanya berfungsi untuk menampilkan JSON function
+4. Proses pengambilan dan penampilan data dilakukan di dalam file index.html
+5. CSS dari file diatur menggunakan package yang ada
+
+
+Nama : Shifa Eldita Azzalea
+NPM : 1213013
+Prodi/Kelas : D3 Teknik Informatika/2A
+
+"Willing to learn more about JS"
+
